@@ -1,5 +1,5 @@
-import { readFile } from "node:fs/promises";
-import { createHash } from "node:crypto";
+import fs from "node:fs";
+import crypto from "node:crypto";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -8,9 +8,11 @@ const filePath = resolve(__dirname, "files", "fileToCalculateHashFor.txt");
 
 const calculateHash = async () => {
   try {
-    const buff = await readFile(filePath);
-    const hash = createHash("sha256").update(buff).digest("hex");
-    console.log(hash);
+    fs.createReadStream(filePath)
+      .pipe(crypto.createHash("sha256").setEncoding("hex"))
+      .on("finish", function () {
+        console.log(this.read());
+      });
   } catch (error) {
     console.error(error);
   }
