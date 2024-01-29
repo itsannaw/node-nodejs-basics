@@ -7,16 +7,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const folderPath = resolve(__dirname, "files");
 
 const list = async () => {
-  try {
     if (!(await checkExistence(folderPath))) {
       throw new Error("FS operation failed!");
     } else {
       const files = await readdir(folderPath);
       for (const file of files) console.log(file);
     }
-  } catch (err) {
-    console.error(err);
-  }
 };
 
 await list();

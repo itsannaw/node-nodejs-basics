@@ -10,15 +10,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const filePath = resolve(__dirname, folder, name);
 
 const create = async () => {
-  try {
-    if (await checkAccess(filePath)) {
-      throw new Error("FS operation failed!");
-    } else {
-      await writeFile(filePath, content);
-      console.log(`File ${name} saved in ${filePath}`);
-    }
-  } catch (err) {
-    console.error(err);
+  if (await checkAccess(filePath)) {
+    throw new Error("FS operation failed!");
+  } else {
+    await writeFile(filePath, content);
+    console.log(`File ${name} saved in ${filePath}`);
   }
 };
 

@@ -7,16 +7,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const filePath = resolve(__dirname, "files", "fileToRemove.txt");
 
 const remove = async () => {
-  try {
     if (!(await checkExistence(filePath))) {
       throw new Error("FS operation failed!");
     } else {
       await fsPromises.unlink(filePath);
       console.log(`${filePath} delete!`);
     }
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 await remove();

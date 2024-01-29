@@ -10,21 +10,17 @@ const copyFolderPath = resolve(__dirname, "files_copy");
 const joinCopyFolderPath = resolve(__dirname, copyFolderPath);
 
 const copy = async () => {
-  try {
-    if (
-      !(await checkExistence(sourceFolderPath)) ||
-      (await checkAccess(joinCopyFolderPath))
-    ) {
-      throw new Error("FS operation failed!");
-    } else {
-      await fsPromises.cp(sourceFolderPath, copyFolderPath, {
-        recursive: true,
-        force: false,
-      });
-      console.log(`${copyFolderPath} created!`);
-    }
-  } catch (error) {
-    console.error(error);
+  if (
+    !(await checkExistence(sourceFolderPath)) ||
+    (await checkAccess(joinCopyFolderPath))
+  ) {
+    throw new Error("FS operation failed!");
+  } else {
+    await fsPromises.cp(sourceFolderPath, copyFolderPath, {
+      recursive: true,
+      force: false,
+    });
+    console.log(`${copyFolderPath} created!`);
   }
 };
 
